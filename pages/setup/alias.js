@@ -67,7 +67,8 @@ export default function Alias() {
             className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
             role="alert"
           >
-            <span className="font-medium">Something went wrong!</span> {error}
+            <span className="font-medium">Something went wrong!</span> This
+            alias is already taken
           </div>
         )}
         <div className="flex flex-row gap-4 mb-4 flex-wrap">
