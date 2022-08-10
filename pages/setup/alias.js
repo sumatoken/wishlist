@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Loading from "../../components/utils/Loading";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const aliasSchema = z.object({
   alias: z.string().min(4, { message: "Must be 4 characters or more" }),

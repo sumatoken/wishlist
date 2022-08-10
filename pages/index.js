@@ -4,12 +4,12 @@ import Header from "../components/Header";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
-  return (<>
-  <Head>
-    <title>
-      Home Page
-    </title>
-  </Head>
-  <Header />
-  </>)>;
+  return (
+    <>
+      <Head>
+        <title>Home Page</title>
+      </Head>
+      <Header />
+    </>
+  );
 }
