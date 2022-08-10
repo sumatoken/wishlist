@@ -31,7 +31,7 @@ export default function Register() {
     confirm_password: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isRegistred, setIsRegistred] = useState(false);
+  const [registered, setIsRegistred] = useState(false);
   const [error, setError] = useState(null);
   const router = useRouter();
 
@@ -62,10 +62,9 @@ export default function Register() {
     })
       .then((response) => response.json())
       .then((res) => {
-        console.log("res", res);
         setCookie("email", res.email);
         setCookie("fullname", res.fullname);
-
+        setCookie("registred", true);
         setError(null);
         setIsRegistred(true);
       })
@@ -76,7 +75,7 @@ export default function Register() {
         setError(error);
       });
   };
-  if (isRegistred) router.push("/setup/alias");
+  if (registered) router.push("/setup/alias");
 
   return (
     <div className="bg-grey-lighter min-h-screen flex flex-col">

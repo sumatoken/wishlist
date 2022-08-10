@@ -25,6 +25,7 @@ export default NextAuth({
           select: {
             id: true,
             email: true,
+            fullname: true,
             password: true,
           },
         });
@@ -36,4 +37,20 @@ export default NextAuth({
       },
     }),
   ],
+  callbacks: {
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        session.user.id = token.uid;
+        session.user.fullname = token.fullname;
+      }
+      return session;
+    },
+    jwt: async ({ user, token }) => {
+      if (user) {
+        token.uid = user.id;
+        token.fullname = user.fullname;
+      }
+      return token;
+    },
+  },
 });

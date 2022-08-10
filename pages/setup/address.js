@@ -12,11 +12,12 @@ const addressSchema = z.object({
 });
 export default function Address() {
   const router = useRouter();
-  const email = getCookie("email");
+  const email = getCookie("email") || false;
+  const isGoingThruRegistration = getCookie("registred");
   const [address, setAddress] = useState("");
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSbmitting] = useState(false);
-  const [registred, setRegistred] = useState(false);
+  const [registered, setRegistred] = useState(false);
   const {
     register,
     watch,
@@ -51,7 +52,7 @@ export default function Address() {
         setError(error);
       });
   };
-  if (registred) router.push("/setup/story");
+  if (registered) router.push("/setup/story");
 
   return (
     <div>

@@ -13,11 +13,11 @@ const storySchema = z.object({
 });
 export default function Address() {
   const router = useRouter();
-  const email = getCookie("email");
+  const email = getCookie("email") || null;
   const [story, setStory] = useState("");
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSbmitting] = useState(false);
-  const [registred, setRegistred] = useState(false);
+  const [registered, setRegistred] = useState(false);
   const {
     register,
     watch,
@@ -53,7 +53,7 @@ export default function Address() {
         setError(error);
       });
   };
-  if (registred) signIn(null, { callbackUrl: "/" });
+  if (registered) signIn(null, { callbackUrl: "/" });
 
   return (
     <div>

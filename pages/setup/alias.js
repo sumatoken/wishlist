@@ -14,11 +14,11 @@ const aliasSchema = z.object({
 
 export default function Alias() {
   const router = useRouter();
-  const email = getCookie("email");
+  const email = getCookie("email") || null;
   const fullname = getCookie("fullname");
   const [alias, setAlias] = useState("");
   const [error, setError] = useState(null);
-  const [registred, setRegistred] = useState(false);
+  const [registered, setRegistred] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
   const handleAlias = async (alias) => {
     if (alias === "") {
@@ -49,7 +49,7 @@ export default function Alias() {
         setError(error);
       });
   };
-  if (registred) router.push("/setup/address");
+  if (registered) router.push("/setup/address");
   return (
     <div>
       <Head>
