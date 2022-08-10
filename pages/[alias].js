@@ -8,7 +8,7 @@ import NoUserPage from "../components/home_pages/NoUserPage";
 import Loading from "../components/utils/Loading";
 import prisma from "../lib/prisma";
 
-export default function alias({ user }) {
+export default function Alias({ user }) {
   const router = useRouter();
   const { alias } = router.query;
   const { data: session, status } = useSession();
