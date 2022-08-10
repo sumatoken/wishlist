@@ -51,6 +51,9 @@ export default function Alias() {
   if (registred) router.push("/setup/address");
   return (
     <div>
+      <Head>
+        <title>Alias - Setup</title>
+      </Head>
       <Header />
       <div className="container max-w-sm mx-auto flex flex-1 flex-col items-center  px-2">
         <h1>
