@@ -9,9 +9,9 @@ export default function Story({ fullname, story }) {
           <div>
             <p className="text-lg font-medium">"{story}"</p>
           </div>
-          <figcaption className="font-medium">
+          <div className="font-medium">
             <div className="text-sky-500 dark:text-sky-400">{fullname}</div>
-          </figcaption>
+          </div>
         </div>
       </div>
     </div>
