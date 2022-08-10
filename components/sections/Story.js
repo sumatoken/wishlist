@@ -7,7 +7,7 @@ export default function Story({ fullname, story }) {
         <div className="pt-6 md:p-8 text-center md:text-left space-y-4">
           <div className="text-slate-700 dark:text-slate-500">My story: </div>
           <div>
-            <p className="text-lg font-medium">"{story}"</p>
+            <p className="text-lg font-medium">{story}</p>
           </div>
           <div className="font-medium">
             <div className="text-sky-500 dark:text-sky-400">{fullname}</div>
