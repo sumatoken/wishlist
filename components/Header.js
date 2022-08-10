@@ -42,17 +42,13 @@ export default function Header() {
             <div className="flex items-center lg:order-2">
               <button
                 disabled
-                onClick={() => router.push("/user/links")}
                 className="button bg-grey-600 text-black dark:text-white hover:text-white-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
               >
                 Welcome {session.user.fullname}
               </button>
-              <Link href="/user/links">
-                <button
-                  onClick={() => router.push("/user/links")}
-                  className="button text-white bg-emerald-600 dark:text-white hover:text-white-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
-                >
-                  Links
+              <Link href={`/${session.user.username}`}>
+                <button className="button text-white bg-emerald-600 dark:text-white hover:text-white-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
+                  Profile
                 </button>
               </Link>
               <button

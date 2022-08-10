@@ -73,12 +73,12 @@ export default function Link({ url, id }) {
   };
   if (!isDeleted)
     return (
-      <div className="rounded-md bg-white p-4 m-2 flex flex-row gap-2 w-full">
+      <div className="rounded-md bg-white p-4 m-2 flex flex-row gap-2 w-full items-center">
         <div className="flex flex-row gap-2">
           <input
             disabled={!isEditing}
             autoFocus={isEditing}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-fit"
+            className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-fit"
             value={editedUrl}
             onChange={(e) => setEditedUrl(e.target.value)}
           />

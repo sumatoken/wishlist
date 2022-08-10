@@ -10,7 +10,6 @@ export default function HomePage({ user }) {
   const { data: session } = useSession();
   return (
     <>
-      owns
       <Header />
       <ToastContainer />
       <div className="w-full flex flex-col gap-4 justify-center align-center items-center">

@@ -12,23 +12,17 @@ export default function Alias({ user }) {
   const router = useRouter();
   const { alias } = router.query;
   const { data: session, status } = useSession();
-  console.log(session);
+  if (!user) return <NoUserPage />;
+
   if (status === "loading") {
     return <Loading />;
   }
-  if (!user) {
-    return <NoUserPage />;
-  }
-  if (session?.user.username === alias) {
+  if (session && session.user.username === alias) {
     return <HomePage user={user} />;
-  } else {
-    return <PublicHomePage user={user} />;
   }
-  console.log(links);
-  return <p>Alias: {alias}</p>;
+  return <PublicHomePage user={user} />;
 }
-export async function getServerSideProps(req, context) {
-  const session = await getSession(context);
+export async function getServerSideProps(req) {
   const alias = await req.query.alias;
   const user =
     (await prisma.user.findUnique({

@@ -5,7 +5,7 @@ import {
   SaveIcon,
   XCircleIcon,
 } from "@heroicons/react/solid";
-import Link from "../utils/Link";
+import Link from "../utils/link/Link";
 import AddLink from "../utils/AddLink";
 
 export default function Links({ links }) {
