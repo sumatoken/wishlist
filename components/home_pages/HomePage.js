@@ -11,7 +11,7 @@ export default function HomePage({ user }) {
     <>
       owns
       <Header />
-      <div className="flex flex-col gap-4 justify-center align-center items-center">
+      <div className="w-full flex flex-col gap-4 justify-center align-center items-center">
         <Story fullname={user.fullname} story={user.story} />
         <Address address={user.address} />
         <Links links={user.links} />
