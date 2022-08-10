@@ -2,19 +2,17 @@ import { PlusCircleIcon } from "@heroicons/react/solid";
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-
 export default function AddLink({ handleChange }) {
   const { data: session } = useSession();
   const [status, setStatus] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [url, setUrl] = useState("");
-
   const HandleAddLink = async (url) => {
-    console.log(url);
+    console.log(session);
     setSubmitting(true);
     const data = {
-      userEmail: session.user.email,
+      userId: session.user.id,
       url,
     };
     fetch("/api/user/links/add", {
@@ -26,7 +24,6 @@ export default function AddLink({ handleChange }) {
     })
       .then((response) => response.json())
       .then((res) => {
-        console.log("add", res);
         setSubmitting(false);
         handleChange(res);
         setStatus(false);
@@ -34,11 +31,16 @@ export default function AddLink({ handleChange }) {
         toast.success("Added link!", {
           position: "bottom-center",
           autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
         });
       })
       .catch((error) => {
         setSubmitting(false);
-        toast.error("Link already exists", {
+        toast.error("Something went wrong!", {
           position: "bottom-center",
           autoClose: 1000,
         });

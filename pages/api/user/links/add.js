@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   const link = await prisma.link.create({
     data: {
       url: info.url,
-      userEmail: info.userEmail,
+      userId: info.userId,
     },
   });
   res.status(200).json(link);

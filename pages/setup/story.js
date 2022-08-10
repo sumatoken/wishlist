@@ -14,6 +14,7 @@ const storySchema = z.object({
 export default function Address() {
   const router = useRouter();
   const email = getCookie("email") || null;
+  const alias = getCookie("alias");
   const [story, setStory] = useState("");
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSbmitting] = useState(false);
@@ -53,7 +54,7 @@ export default function Address() {
         setError(error);
       });
   };
-  if (registered) signIn(null, { callbackUrl: "/" });
+  if (registered) signIn(null, { callbackUrl: `/${alias}` });
 
   return (
     <div>

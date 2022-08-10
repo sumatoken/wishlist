@@ -12,8 +12,7 @@ export default function Alias({ user }) {
   const router = useRouter();
   const { alias } = router.query;
   const { data: session, status } = useSession();
-  console.log(user);
-
+  console.log(session);
   if (status === "loading") {
     return <Loading />;
   }

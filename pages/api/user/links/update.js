@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   const info = await req.body;
   const link = await prisma.link.update({
     where: {
-      url: info.currentUrl,
+      id: info.id,
     },
     data: {
       url: info.editedUrl,

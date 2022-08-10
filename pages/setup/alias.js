@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Loading from "../../components/utils/Loading";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { setCookie } from "cookies-next";
 
 const aliasSchema = z.object({
   alias: z.string().min(4, { message: "Must be 4 characters or more" }),
@@ -39,6 +40,7 @@ export default function Alias() {
     })
       .then((response) => response.json())
       .then((res) => {
+        setCookie("alias", alias);
         setSubmitting(false);
         setError(null);
         setRegistred(true);

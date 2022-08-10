@@ -27,7 +27,7 @@ export default function Links({ links }) {
           <div className="flex flex-col items-center justify-around align-center w-full">
             <blockquote>
               {frontLinks.map((link, key) => (
-                <Link key={key} url={link.url} />
+                <Link key={key} url={link.url} id={link.id} />
               ))}
             </blockquote>
           </div>

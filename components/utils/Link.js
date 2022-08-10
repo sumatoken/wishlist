@@ -6,15 +6,18 @@ import {
   XCircleIcon,
 } from "@heroicons/react/solid";
 import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
 
-export default function Link({ url }) {
+export default function Link({ url, id }) {
+  const { data: session } = useSession();
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
   const [currentUrl, setCurrentUrl] = useState(url);
   const [editedUrl, setEditedUrl] = useState(url);
+  const [linkId, setLinkId] = useState(id);
   const deleteLinkHandler = async () => {
-    const data = currentUrl;
+    const data = id;
     fetch("/api/user/links/delete", {
       method: "DELETE",
       headers: {
@@ -41,7 +44,7 @@ export default function Link({ url }) {
     setIsEditing(true);
 
     const data = {
-      currentUrl,
+      id,
       editedUrl,
     };
     fetch("/api/user/links/update", {
@@ -54,8 +57,7 @@ export default function Link({ url }) {
       .then((response) => response.json())
       .then((res) => {
         setIsEditing(false);
-        /* setError(null);
-        setCurrentUrl() */
+        setError(null);
         setCurrentUrl(editedUrl);
         console.log("edit res", res);
         toast.success("Edited link!", {
@@ -76,7 +78,7 @@ export default function Link({ url }) {
           <input
             disabled={!isEditing}
             autoFocus={isEditing}
-            className="bg-inherit w-fit"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-fit"
             value={editedUrl}
             onChange={(e) => setEditedUrl(e.target.value)}
           />
