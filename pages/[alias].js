@@ -6,7 +6,7 @@ import PublicHomePage from "../components/home_pages/PublicHomePage";
 import NoUserPage from "../components/home_pages/NoUserPage";
 
 import Loading from "../components/utils/Loading";
-//import prisma from "../lib/prisma";
+import prisma from "../lib/prisma";
 
 export default function Alias({ user }) {
   const router = useRouter();
