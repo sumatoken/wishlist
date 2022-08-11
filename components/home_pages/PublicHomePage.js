@@ -7,6 +7,7 @@ import useSWR from "swr";
 import Loading from "../utils/Loading";
 import { useSession } from "next-auth/react";
 import HomePage from "./HomePage";
+import Head from "next/head";
 
 export default function PublicHomePage({ alias }) {
   const [mode, setMode] = useState(false);
@@ -21,6 +22,9 @@ export default function PublicHomePage({ alias }) {
   }
   return (
     <>
+      <Head>
+        <title>Whishlist Home Page</title>
+      </Head>
       <Header />
       <div className="flex flex-col gap-4 justify-center align-center items-center">
         {session?.user.username === alias && (
@@ -30,8 +34,8 @@ export default function PublicHomePage({ alias }) {
           >
             <input
               type="checkbox"
-              value=""
               id="default-toggle"
+              checked={mode}
               className="sr-only peer"
               onChange={() => setMode(!mode)}
             />
