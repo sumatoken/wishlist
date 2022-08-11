@@ -18,7 +18,7 @@ export default function Alias({}) {
     return <Loading />;
   }
 
-  if (isNewUser && getCookie("alias") === alias)
+  if (isNewUser && getCookie("alias") === alias && !session)
     return <HomePage alias={alias} />;
 
   if (session && session.user.username === alias) {
