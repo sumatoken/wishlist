@@ -6,7 +6,7 @@ import PublicHomePage from "../components/home_pages/PublicHomePage";
 import NoUserPage from "../components/home_pages/NoUserPage";
 
 import Loading from "../components/utils/Loading";
-import prisma from "../lib/prisma";
+//import prisma from "../lib/prisma";
 
 export default function Alias({ user }) {
   const router = useRouter();
@@ -22,8 +22,8 @@ export default function Alias({ user }) {
   }
   return <PublicHomePage user={user} />;
 }
-export async function getServerSideProps(req) {
-  const alias = await req.query.alias;
+export async function getServerSideProps({ req, res, context }) {
+  const alias = await req.url.substring(1);
   const user =
     (await prisma.user.findUnique({
       where: {

@@ -114,7 +114,6 @@ export default function Alias() {
             >
               https://www.website.com/{alias}
             </span>
-            .
           </p>
         </div>
       </div>
