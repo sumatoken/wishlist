@@ -46,7 +46,7 @@ export default function HomePage({ alias }) {
         </label>
         <Story fullname={data.fullname} story={data.story} />
         <Address address={data.address} />
-        <Links links={data.links} />
+        <Links links={data.links} userId={data.id} />
       </div>
     </>
   );

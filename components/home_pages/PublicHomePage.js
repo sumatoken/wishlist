@@ -8,6 +8,7 @@ import Loading from "../utils/Loading";
 import { useSession } from "next-auth/react";
 import HomePage from "./HomePage";
 import Head from "next/head";
+import { getCookie } from "cookies-next";
 
 export default function PublicHomePage({ alias }) {
   const [mode, setMode] = useState(false);
@@ -17,17 +18,20 @@ export default function PublicHomePage({ alias }) {
   const { data, error } = useSWR(`/api/user/links/${alias}`, fetcher);
   if (error) return <div>failed to load</div>;
   if (!data) return <Loading />;
-  if (session?.user.username === alias && mode) {
+  if (
+    (session?.user.username === alias && mode) ||
+    (getCookie("alias") === alias && mode)
+  ) {
     return <HomePage alias={alias} />;
   }
   return (
     <>
       <Head>
-        <title>Whishlist Home Page</title>
+        <title>Whishlist - Home Page</title>
       </Head>
       <Header />
       <div className="flex flex-col gap-4 justify-center align-center items-center">
-        {session?.user.username === alias && (
+        {session?.user.username === alias || getCookie("alias") === alias ? (
           <label
             htmlFor="default-toggle"
             className="inline-flex relative items-center cursor-pointer"
@@ -44,7 +48,7 @@ export default function PublicHomePage({ alias }) {
               Switch modes
             </span>
           </label>
-        )}
+        ) : null}
         <Story fullname={data.fullname} story={data.story} />
         <Address address={data.address} />
         <PublicLinks links={data.links} />

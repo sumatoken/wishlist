@@ -62,9 +62,11 @@ export default function Register() {
     })
       .then((response) => response.json())
       .then((res) => {
+        console.log("register", res);
         setCookie("email", res.email);
         setCookie("fullname", res.fullname);
         setCookie("registred", true);
+        setCookie("newUserId", res.id);
         setError(null);
         setIsRegistred(true);
       })

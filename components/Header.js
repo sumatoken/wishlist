@@ -1,12 +1,39 @@
-import React from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
+import React, { useEffect, useState } from "react";
+import { getSession, signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { getCookie } from "cookies-next";
+import { set } from "zod";
 
 export default function Header() {
+  const [guest, setGuest] = useState(true);
   const router = useRouter();
+  const isNewUser = getCookie("newUser");
+  const newUserAlias = getCookie("alias");
   const { data: session } = useSession();
+
+  useEffect(() => {
+    const isGuest = () => {
+      if (isNewUser === true) {
+        setGuest(false);
+      } else if (session) {
+        setGuest(false);
+      } else {
+        setGuest(true);
+      }
+    };
+    isGuest();
+    console.log(guest);
+  }, [guest]);
+
+  /*  const getAliasLink = () => {
+    if (session) {
+      return session.user.username;
+    } else if (isNewUser) {
+      return newUserAlias;
+    }
+  }; */
   return (
     <header>
       <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
@@ -24,19 +51,20 @@ export default function Header() {
                 Linking
               </span>
             </Link>
-            <Link href="/feedback/suggestions">
-              <span className="ml-6 button text-gray-800 bg-emerald-200 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
-                Feedback
-              </span>
-            </Link>
           </div>
-          {!session ? (
+
+          {guest ? (
             <div className="flex items-center lg:order-2">
+              <Link href="/feedback/suggestions">
+                <span className="ml-6 button text-gray-800 bg-emerald-200 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
+                  Feedback
+                </span>
+              </Link>
               <button
                 onClick={() => signIn(null, { callbackUrl: "/" })}
                 className="button text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
               >
-                Log in
+                Log In
               </button>
               <Link href="/auth/register">
                 <span className="button text-gray-800 bg-emerald-200 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
@@ -49,21 +77,15 @@ export default function Header() {
               <button
                 disabled
                 className="button bg-grey-600 text-black dark:text-white hover:text-white-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
-              >
-                Welcome {session.user.fullname}
-              </button>
-              <Link href={`/${session.user.username}`}>
-                <button className="button text-white bg-emerald-600 dark:text-white hover:text-white-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
-                  Profile
-                </button>
-              </Link>
+              ></button>
+
               <Link href={`/auth/settings`}>
                 <button className="button text-white bg-yellow-600	 dark:text-white hover:text-white-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
                   Settings
                 </button>
               </Link>
               <button
-                onClick={() => signOut()}
+                onClick={() => signIn()}
                 className="button text-white bg-black dark:text-white hover:text-white-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
               >
                 Log out

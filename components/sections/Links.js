@@ -8,7 +8,7 @@ import {
 import Link from "../utils/link/Link";
 import AddLink from "../utils/AddLink";
 
-export default function Links({ links }) {
+export default function Links({ links, userId }) {
   const [frontLinks, setFrontLinks] = useState(links);
   const handleLinkAdd = (link) => {
     setFrontLinks([...frontLinks, link]);
@@ -27,7 +27,7 @@ export default function Links({ links }) {
           <div className="flex flex-col items-center justify-around align-center w-full">
             <div>
               {frontLinks.map((link, key) => (
-                <Link key={key} url={link.url} id={link.id} />
+                <Link key={key} url={link.url} id={link.id} userId={userId} />
               ))}
             </div>
           </div>

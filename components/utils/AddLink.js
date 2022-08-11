@@ -1,4 +1,5 @@
 import { PlusCircleIcon } from "@heroicons/react/solid";
+import { getCookie } from "cookies-next";
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -8,11 +9,13 @@ export default function AddLink({ handleChange }) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [url, setUrl] = useState("");
+  const isNewUser = getCookie("registred");
+
   const HandleAddLink = async (url) => {
     console.log(session);
     setSubmitting(true);
     const data = {
-      userId: session.user.id,
+      userId: isNewUser ? getCookie("newUserId") : session.user.id,
       url,
     };
     fetch("/api/user/links/add", {

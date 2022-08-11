@@ -78,7 +78,7 @@ export default function Register() {
         setError(error);
       });
   };
-  if (changed) signIn(null, { callbackUrl: `/${session.user.username}` });
+  if (changed) router.push(`/${session.user.username}`);
 
   return (
     <div className="bg-grey-lighter min-h-screen flex flex-col">

@@ -7,9 +7,10 @@ import {
   XCircleIcon,
 } from "@heroicons/react/solid";
 import { toast } from "react-toastify";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
+import { getCookie } from "cookies-next";
 
-export default function Link({ url, id }) {
+export default function Link({ url, id, userId }) {
   const { data: session } = useSession();
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -17,6 +18,7 @@ export default function Link({ url, id }) {
   const [currentUrl, setCurrentUrl] = useState(url);
   const [editedUrl, setEditedUrl] = useState(url);
   const [linkId, setLinkId] = useState(id);
+  const isNewUser = getSession("registred");
   const deleteLinkHandler = async () => {
     const data = id;
     fetch("/api/user/links/delete", {
@@ -45,7 +47,7 @@ export default function Link({ url, id }) {
     setIsEditing(true);
 
     const data = {
-      id,
+      id: id,
       editedUrl,
     };
     fetch("/api/user/links/update", {
