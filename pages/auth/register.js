@@ -177,12 +177,13 @@ export default function Register() {
         </form>
         <div className="text-grey-dark mt-6">
           Already have an account?
-          <a
+          <span
+            onClick={() => signIn()}
             className="no-underline border-b border-blue text-blue"
             href="../login/"
           >
             Log in
-          </a>
+          </span>
           .
         </div>
       </div>

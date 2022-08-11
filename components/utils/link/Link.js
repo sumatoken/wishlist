@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   ArchiveIcon,
+  ExternalLinkIcon,
   PencilIcon,
   SaveIcon,
   XCircleIcon,
@@ -87,6 +88,9 @@ export default function Link({ url, id }) {
           className="button h-5 w-5 text-red-500"
           onClick={() => deleteLinkHandler()}
         />
+        <a href={url}>
+          <ExternalLinkIcon className="button h-5 w-5 text-violet-500" />
+        </a>
         {!isEditing ? (
           <PencilIcon
             className="button h-5 w-5 text-blue-500"
