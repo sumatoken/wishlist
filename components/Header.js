@@ -3,7 +3,6 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { getCookie } from "cookies-next";
 
 export default function Header() {
   const router = useRouter();

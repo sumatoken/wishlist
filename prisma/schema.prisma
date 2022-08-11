@@ -42,10 +42,10 @@ model User {
   username      String?   @unique
   email         String?   @unique
   emailVerified DateTime?
-  address       String?
+  address       String?   @db.VarChar(200)
   password      String?
   image         String?
-  story         String?
+  story         String?   @db.VarChar(200)
   accounts      Account[]
   sessions      Session[]
   links         Link[]
@@ -64,4 +64,9 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Suggestion {
+  id      String @id @default(cuid())
+  message String @db.VarChar(200)
 }
