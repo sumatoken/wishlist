@@ -44,8 +44,13 @@ export default function HomePage({ alias }) {
             Switch modes
           </span>
         </label>
-        <Story fullname={data.fullname} story={data.story} />
-        <Address address={data.address} />
+        <Story
+          fullname={data.fullname}
+          story={data.story}
+          mode
+          userId={data.id}
+        />
+        <Address address={data.address} mode userId={data.id} />
         <Links links={data.links} userId={data.id} />
       </div>
     </>

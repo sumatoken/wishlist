@@ -45,6 +45,7 @@ model User {
   address       String?   @db.VarChar(200)
   password      String?
   image         String?
+  isNameVisible Boolean?  @default(false)
   story         String?   @db.VarChar(200)
   accounts      Account[]
   sessions      Session[]
@@ -67,6 +68,7 @@ model VerificationToken {
 }
 
 model Suggestion {
-  id      String @id @default(cuid())
-  message String @db.VarChar(200)
+  id        String   @id @default(cuid())
+  message   String   @db.VarChar(200)
+  createdAt DateTime @default(now())
 }

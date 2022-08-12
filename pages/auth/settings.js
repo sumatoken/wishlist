@@ -24,7 +24,7 @@ const FormSchema = z
     path: ["confirm_password"],
   });
 
-export default function Register() {
+export default function Settings() {
   const [info, setInfo] = useState({
     current_password: "",
     new_password: "",
