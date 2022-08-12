@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "../../../lib/prisma";
+import { compare } from "bcryptjs";
 
 export default NextAuth({
   debug: true,
@@ -29,7 +30,13 @@ export default NextAuth({
             password: true,
           },
         });
-        if (user && user.password == credentials.password) {
+        const isPasswordCorrect = await compare(
+          credentials.password,
+          user.password
+        ).then(function (result) {
+          return result;
+        });
+        if (user && isPasswordCorrect) {
           return user;
         } else {
           return false;

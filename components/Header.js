@@ -11,8 +11,14 @@ export default function Header() {
   const router = useRouter();
   const isNewUser = getCookie("newUser");
   const newUserAlias = getCookie("alias");
-  const { data: session } = useSession();
-
+  const { data: session, status } = useSession();
+  const isLoggedIn = () => {
+    if (status) {
+      if (session || status === "authenticated") return true;
+      return false;
+    }
+  };
+  console.log("isLoggedIn", isLoggedIn());
   useEffect(() => {
     const isGuest = () => {
       if (isNewUser === true) {
@@ -24,8 +30,7 @@ export default function Header() {
       }
     };
     isGuest();
-    console.log(guest);
-  }, [guest]);
+  }, [guest, session, isNewUser]);
 
   /*  const getAliasLink = () => {
     if (session) {
@@ -75,18 +80,15 @@ export default function Header() {
           ) : (
             <div className="flex items-center lg:order-2">
               <button
-                disabled
-                className="button bg-grey-600 text-black dark:text-white hover:text-white-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
-              ></button>
-
-              <button
                 className="button text-white bg-yellow-600	 dark:text-white hover:text-white-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
                 onClick={() => signIn(null, { callbackUrl: "/auth/settings" })}
               >
                 Settings
               </button>
               <button
-                onClick={() => signIn()}
+                onClick={() =>
+                  isNewUser ? signIn(null, { callbackUrl: "/" }) : signOut()
+                }
                 className="button text-white bg-black dark:text-white hover:text-white-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
               >
                 Log out
