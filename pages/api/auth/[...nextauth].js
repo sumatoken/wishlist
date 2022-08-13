@@ -20,6 +20,8 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        if (credentials.email === "" || credentials.password === "")
+          return false;
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
           select: {
@@ -36,10 +38,10 @@ export default NextAuth({
         ).then(function (result) {
           return result;
         });
-        if (user && isPasswordCorrect) {
-          return user;
-        } else {
+        if (!user) {
           return false;
+        } else {
+          if (isPasswordCorrect) return user;
         }
       },
     }),
