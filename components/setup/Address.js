@@ -59,7 +59,6 @@ export default function Address() {
       <Head>
         <title>Shipping Address - Setup</title>
       </Head>
-      <Header />
       <form onSubmit={handleSubmit(handleAddress)}>
         <div className="container max-w-sm mx-auto flex flex-1 flex-col items-center  px-2">
           <h1>

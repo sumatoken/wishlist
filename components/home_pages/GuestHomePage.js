@@ -20,7 +20,6 @@ export default function PublicHomePage({ alias }) {
       <Head>
         <title>Whishlist - Home Page</title>
       </Head>
-      <Header />
       <div className="flex flex-col gap-4 justify-center align-center items-center">
         <Story fullname={data.fullname} story={data.story} />
         <Address address={data.address} />

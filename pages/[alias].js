@@ -7,6 +7,7 @@ import NoUserPage from "../components/home_pages/NoUserPage";
 
 import Loading from "../components/utils/Loading";
 import { getCookie } from "cookies-next";
+import Header from "../components/Header";
 
 export default function Alias({}) {
   const router = useRouter();
@@ -19,10 +20,24 @@ export default function Alias({}) {
   }
 
   if (isNewUser && getCookie("alias") === alias && !session)
-    return <HomePage alias={alias} />;
+    return (
+      <>
+        <Header />
+        <HomePage alias={alias} />
+      </>
+    );
 
   if (session && session.user.username === alias) {
-    return <HomePage alias={alias} />;
+    return (
+      <>
+        <Header />
+        <HomePage alias={alias} />;
+      </>
+    );
   }
-  return <GuestHomePage alias={alias} />;
+  return;
+  <>
+    <Header />
+    <GuestHomePage alias={alias} />;
+  </>;
 }

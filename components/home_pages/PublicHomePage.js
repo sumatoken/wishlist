@@ -29,7 +29,6 @@ export default function PublicHomePage({ alias }) {
       <Head>
         <title>Whishlist - Home Page</title>
       </Head>
-      <Header />
       <div className="flex flex-col gap-4 justify-center align-center items-center">
         {session?.user.username === alias || getCookie("alias") === alias ? (
           <label

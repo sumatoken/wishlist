@@ -25,7 +25,6 @@ export default function HomePage({ alias }) {
       <Head>
         <title>Whishlist Home Page</title>
       </Head>
-      <Header />
       <ToastContainer />
       <div className="w-full flex flex-col gap-4 justify-center align-center items-center">
         <label

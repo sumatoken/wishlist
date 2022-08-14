@@ -57,7 +57,6 @@ export default function Alias() {
       <Head>
         <title>Alias - Setup</title>
       </Head>
-      <Header />
       <div className="container max-w-sm mx-auto flex flex-1 flex-col items-center  px-2">
         <h1>
           STEP 1 of 3<br />
