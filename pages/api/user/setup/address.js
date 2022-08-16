@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   const info = await req.body;
   const user = await prisma.user.update({
     where: {
-      email: info.email,
+      id: info.id,
     },
     data: {
       address: info.address.address,

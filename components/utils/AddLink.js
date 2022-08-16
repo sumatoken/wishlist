@@ -15,7 +15,7 @@ export default function AddLink({ handleChange }) {
     console.log(session);
     setSubmitting(true);
     const data = {
-      userId: isNewUser ? getCookie("newUserId") : session.user.id,
+      userId: session.user.id,
       url,
     };
     fetch("/api/user/links/add", {

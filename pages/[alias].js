@@ -1,4 +1,4 @@
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React from "react";
 import HomePage from "../components/home_pages/HomePage";
@@ -6,37 +6,34 @@ import GuestHomePage from "../components/home_pages/GuestHomePage";
 import NoUserPage from "../components/home_pages/NoUserPage";
 
 import Loading from "../components/utils/Loading";
-import { getCookie } from "cookies-next";
 import Header from "../components/Header";
+import { deleteCookie, getCookie } from "cookies-next";
+import useSWR from "swr";
 
-export default function Alias({}) {
+export default function Alias() {
   const router = useRouter();
-  const isNewUser = getCookie("registred");
-  const { alias } = router.query;
   const { data: session, status } = useSession();
-  if (status === "loading") {
-    return <Loading />;
-  }
+  const { alias } = router.query;
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-  if (isNewUser && getCookie("alias") === alias && !session)
+  const { data, error } = useSWR(`/api/user/links/${alias}`, fetcher);
+
+  console.log(status);
+  if (status === "loading" || !data || !alias) return <Loading />;
+
+  if (session && data.id === session.user.id) {
     return (
       <>
         <Header />
-        <HomePage alias={alias} />
+        <HomePage data={data} />;
       </>
     );
-
-  if (session && session.user.username === alias) {
+  } else {
     return (
       <>
         <Header />
-        <HomePage alias={alias} />;
+        <GuestHomePage data={data} />;
       </>
     );
   }
-  return;
-  <>
-    <Header />
-    <GuestHomePage alias={alias} />;
-  </>;
 }

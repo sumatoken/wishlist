@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Loading from "../../components/utils/Loading";
 import { setCookie } from "cookies-next";
 
@@ -34,7 +34,7 @@ export default function Register() {
   const [registered, setIsRegistred] = useState(false);
   const [error, setError] = useState(null);
   const router = useRouter();
-
+  const { data: session } = useSession();
   const {
     register,
     watch,
@@ -62,12 +62,10 @@ export default function Register() {
     })
       .then((response) => response.json())
       .then((res) => {
-        console.log("register", res);
-        setCookie("email", res.email);
-        setCookie("password", info.password);
-        setCookie("fullname", res.fullname);
-        setCookie("registred", true);
-        setCookie("newUserId", res.id);
+        signIn("credentials", {
+          email: info.email,
+          password: info.password,
+        });
         setError(null);
         setIsRegistred(true);
       })
@@ -78,7 +76,7 @@ export default function Register() {
         setError(error);
       });
   };
-  if (registered) router.push("/setup/alias");
+  if (session) router.push("/setup/alias");
 
   return (
     <div className="bg-grey-lighter min-h-screen flex flex-col">

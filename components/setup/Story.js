@@ -1,12 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getCookie, setCookie } from "cookies-next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Loading from "../utils/Loading";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import Header from "../Header";
+import { getCookie } from "cookies-next";
 const storySchema = z.object({
   story: z.string().min(6, { message: "Please tell us your story" }),
 });
@@ -16,10 +17,8 @@ export default function Address() {
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSbmitting] = useState(false);
   const [registered, setRegistred] = useState(false);
-  const newUserEmail = getCookie("email");
-  const newUserPassword = getCookie("password");
-  const { data: session } = useSession();
-
+  const newUserAlias = getCookie("alias");
+  const { data: session, status } = useSession();
   const {
     register,
     watch,
@@ -28,10 +27,11 @@ export default function Address() {
   } = useForm({
     resolver: zodResolver(storySchema),
   });
+  console.log(session);
 
-  const handleAddress = async (story) => {
+  const handleStory = async (story) => {
     const data = {
-      email,
+      id: session.user.id,
       story,
     };
     setIsSbmitting(true);
@@ -44,17 +44,6 @@ export default function Address() {
     })
       .then((response) => response.json())
       .then((res) => {
-        console.log("res", res);
-        console.log("email", typeof newUserEmail);
-        console.log("paassss", typeof newUserPassword);
-        signIn(
-          "credentials",
-          {
-            email: newUserEmail,
-            password: newUserPassword,
-          },
-          { callbackUrl: "/" }
-        );
         setRegistred(true);
       })
       .catch((error) => {
@@ -63,14 +52,15 @@ export default function Address() {
         setError(error);
       });
   };
-  if (session) router.push(`/${session?.user.username}`);
+  if (registered) router.push(`/${newUserAlias}`);
 
   return (
     <div>
+      <Header />
       <Head>
         <title>Story - Setup</title>
       </Head>
-      <form onSubmit={handleSubmit(handleAddress)}>
+      <form onSubmit={handleSubmit(handleStory)}>
         <div className="container max-w-sm mx-auto flex flex-1 flex-col items-center  px-2">
           <h1>
             STEP 3 of 3<br />

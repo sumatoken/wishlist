@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { getCookie } from "cookies-next";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { setCookie } from "cookies-next";
 import Header from "../Header";
 import Loading from "../utils/Loading";
+import { useSession } from "next-auth/react";
+import { setCookie } from "cookies-next";
 
 const aliasSchema = z.object({
   alias: z.string().min(4, { message: "Must be 4 characters or more" }),
@@ -15,19 +13,19 @@ const aliasSchema = z.object({
 
 export default function Alias() {
   const router = useRouter();
-  const email = getCookie("email") || null;
-  const fullname = getCookie("fullname");
   const [alias, setAlias] = useState("");
   const [error, setError] = useState(null);
   const [registered, setRegistred] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
+  const { data: session, status } = useSession();
+  console.log(session);
   const handleAlias = async (alias) => {
     if (alias === "") {
       setError("Alias is requiered to set your page");
       return;
     }
     const data = {
-      email,
+      id: session.user.id,
       alias,
     };
     setSubmitting(true);
@@ -40,6 +38,7 @@ export default function Alias() {
     })
       .then((response) => response.json())
       .then((res) => {
+        console.log("res", res);
         setCookie("alias", alias);
         setSubmitting(false);
         setError(null);
@@ -54,6 +53,7 @@ export default function Alias() {
   if (registered) router.push("/setup/address");
   return (
     <div>
+      <Header />
       <Head>
         <title>Alias - Setup</title>
       </Head>
@@ -84,10 +84,11 @@ export default function Alias() {
               required
               type="text"
               id="alias"
+              value={alias}
               aria-describedby="helper-text-explanation"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="alias"
-              onChange={(e) => setAlias(e.target.value)}
+              onChange={(e) => setAlias(e.target.value.trim().toLowerCase())}
             />
             {isSubmitting ? (
               <Loading />

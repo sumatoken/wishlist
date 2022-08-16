@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "../../../lib/prisma";
 import { compare } from "bcryptjs";
+import { deleteCookie, getCookie } from "cookies-next";
 export default NextAuth({
   debug: true,
   secret: process.env.NEXTAUTH_SECRET,
@@ -64,8 +65,8 @@ export default NextAuth({
     },
   },
   events: {
-    signIn: ({ user }) => {
-      console.log("user", user);
+    signOut: ({ user }) => {
+      return user;
     },
   },
 });

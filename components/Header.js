@@ -58,7 +58,7 @@ export default function Header() {
             </Link>
           </div>
 
-          {guest ? (
+          {!session ? (
             <div className="flex items-center lg:order-2">
               <Link href="/feedback/suggestions">
                 <span className="ml-6 button text-gray-800 bg-emerald-200 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
@@ -66,7 +66,7 @@ export default function Header() {
                 </span>
               </Link>
               <button
-                onClick={() => signIn(null, { callbackUrl: "/" })}
+                onClick={() => signIn(null, { callbackUrl: `/` })}
                 className="button text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
               >
                 Log In
@@ -86,9 +86,7 @@ export default function Header() {
                 Settings
               </button>
               <button
-                onClick={() =>
-                  isNewUser ? signIn(null, { callbackUrl: "/" }) : signOut()
-                }
+                onClick={() => signOut()}
                 className="button text-white bg-black dark:text-white hover:text-white-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
               >
                 Log out

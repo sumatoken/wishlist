@@ -8,13 +8,10 @@ import Loading from "../utils/Loading";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 
-export default function PublicHomePage({ alias }) {
-  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+export default function GuestHomePage({ data }) {
   const { data: session } = useSession();
-  const { data, error } = useSWR(`/api/user/links/${alias}`, fetcher);
-  if (error) return <div>failed to load</div>;
-  if (!data) return <Loading />;
 
+  console.log("guest", data);
   return (
     <>
       <Head>

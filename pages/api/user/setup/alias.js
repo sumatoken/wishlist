@@ -1,10 +1,10 @@
 import prisma from "../../../../lib/prisma";
 
 export default async function handler(req, res) {
-  const info = await req.body;
+  const info = req.body;
   const user = await prisma.user.update({
     where: {
-      email: info.email,
+      id: info.id,
     },
     data: {
       username: info.alias,

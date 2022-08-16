@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getCookie } from "cookies-next";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -12,12 +12,12 @@ const addressSchema = z.object({
 });
 export default function Address() {
   const router = useRouter();
-  const email = getCookie("email") || false;
-  const isGoingThruRegistration = getCookie("registred");
   const [address, setAddress] = useState("");
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSbmitting] = useState(false);
   const [registered, setRegistred] = useState(false);
+  const { data: session, status } = useSession();
+
   const {
     register,
     watch,
@@ -29,7 +29,7 @@ export default function Address() {
 
   const handleAddress = async (address) => {
     const data = {
-      email,
+      id: session.user.id,
       address,
     };
     setIsSbmitting(true);
@@ -56,6 +56,7 @@ export default function Address() {
 
   return (
     <div>
+      <Header />
       <Head>
         <title>Shipping Address - Setup</title>
       </Head>
@@ -71,7 +72,7 @@ export default function Address() {
               className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
               role="alert"
             >
-              <span className="font-medium">Something went wrong!</span> {error}
+              <span className="font-medium">Something went wrong!</span>
             </div>
           )}
           <div className="flex flex-row gap-4 mb-4 flex-wrap">
