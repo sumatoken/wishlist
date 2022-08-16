@@ -11,7 +11,7 @@ import { getCookie } from "cookies-next";
 const storySchema = z.object({
   story: z.string().min(6, { message: "Please tell us your story" }),
 });
-export default function Address() {
+export default function StoryComponent() {
   const router = useRouter();
   const [story, setStory] = useState("");
   const [error, setError] = useState(null);
@@ -27,7 +27,6 @@ export default function Address() {
   } = useForm({
     resolver: zodResolver(storySchema),
   });
-  console.log(session);
 
   const handleStory = async (story) => {
     const data = {

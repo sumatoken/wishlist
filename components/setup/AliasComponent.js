@@ -11,14 +11,13 @@ const aliasSchema = z.object({
   alias: z.string().min(4, { message: "Must be 4 characters or more" }),
 });
 
-export default function Alias() {
+export default function AliasComponent() {
   const router = useRouter();
   const [alias, setAlias] = useState("");
   const [error, setError] = useState(null);
   const [registered, setRegistred] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
   const { data: session, status } = useSession();
-  console.log(session);
   const handleAlias = async (alias) => {
     if (alias === "") {
       setError("Alias is requiered to set your page");
@@ -38,7 +37,6 @@ export default function Alias() {
     })
       .then((response) => response.json())
       .then((res) => {
-        console.log("res", res);
         setCookie("alias", alias);
         setSubmitting(false);
         setError(null);
