@@ -15,13 +15,18 @@ export default function Alias() {
   const { data: session, status } = useSession();
   const { alias } = router.query;
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
-
   const { data, error } = useSWR(`/api/user/links/${alias}`, fetcher);
-
-  console.log(status);
+  /*   const isProfileIncomplete = async (process, status) => {
+    if (status !== "authenticated") return;
+    if (process === null) router.push("/setup/alias");
+    if (process === 3) router.push("/setup/address");
+    if (process === 6) router.push("/setup/story");
+  };
+   */
   if (status === "loading" || !data || !alias) return <Loading />;
 
   if (session && data.id === session.user.id) {
+    //isProfileIncomplete(data.profileCompletion)
     return (
       <>
         <Header />

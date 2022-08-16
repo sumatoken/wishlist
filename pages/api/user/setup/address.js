@@ -8,6 +8,7 @@ export default async function handler(req, res) {
     },
     data: {
       address: info.address.address,
+      profileCompletion: 6,
     },
   });
   res.status(200).json(user);

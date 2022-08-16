@@ -37,19 +37,20 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  fullname      String?
-  username      String?   @unique
-  email         String?   @unique
-  emailVerified DateTime?
-  address       String?   @db.VarChar(200)
-  password      String?
-  image         String?
-  isNameVisible Boolean?  @default(false)
-  story         String?   @db.VarChar(200)
-  accounts      Account[]
-  sessions      Session[]
-  links         Link[]
+  id                String    @id @default(cuid())
+  fullname          String?
+  username          String?   @unique
+  email             String?   @unique
+  emailVerified     DateTime?
+  address           String?   @db.VarChar(200)
+  password          String?
+  image             String?
+  profileCompletion Int?
+  isNameVisible     Boolean?  @default(false)
+  story             String?   @db.VarChar(200)
+  accounts          Account[]
+  sessions          Session[]
+  links             Link[]
 }
 
 model Link {
