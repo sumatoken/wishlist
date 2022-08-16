@@ -19,7 +19,6 @@ export default function Header() {
     }
   };
 
-  console.log("isLoggedIn", isLoggedIn());
   useEffect(() => {
     const isGuest = () => {
       if (isNewUser === true) {

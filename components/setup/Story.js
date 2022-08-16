@@ -1,24 +1,25 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getCookie, setCookie } from "cookies-next";
-import { signIn } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import Header from "../Header";
 import Loading from "../utils/Loading";
+import { signIn, useSession } from "next-auth/react";
 const storySchema = z.object({
   story: z.string().min(6, { message: "Please tell us your story" }),
 });
 export default function Address() {
   const router = useRouter();
-  const email = getCookie("email") || null;
-  const alias = getCookie("alias");
   const [story, setStory] = useState("");
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSbmitting] = useState(false);
   const [registered, setRegistred] = useState(false);
+  const newUserEmail = getCookie("email");
+  const newUserPassword = getCookie("password");
+  const { data: session } = useSession();
+
   const {
     register,
     watch,
@@ -43,19 +44,26 @@ export default function Address() {
     })
       .then((response) => response.json())
       .then((res) => {
-        setCookie("newUser", true);
         console.log("res", res);
-        setIsSbmitting(false);
-        setError(null);
+        console.log("email", typeof newUserEmail);
+        console.log("paassss", typeof newUserPassword);
+        signIn(
+          "credentials",
+          {
+            email: newUserEmail,
+            password: newUserPassword,
+          },
+          { callbackUrl: "/" }
+        );
         setRegistred(true);
       })
       .catch((error) => {
         setIsSbmitting(false);
-
+        console.log(error);
         setError(error);
       });
   };
-  if (registered) router.push(`/${alias}`);
+  if (session) router.push(`/${session?.user.username}`);
 
   return (
     <div>
@@ -74,7 +82,7 @@ export default function Address() {
               className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
               role="alert"
             >
-              <span className="font-medium">Something went wrong!</span> {error}
+              <span className="font-medium">Something went wrong!</span>
             </div>
           )}
           <div className="flex flex-row gap-4 mb-4 flex-wrap">

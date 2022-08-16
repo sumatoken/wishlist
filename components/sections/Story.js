@@ -1,9 +1,4 @@
-import {
-  PencilAltIcon,
-  PencilIcon,
-  SaveIcon,
-  XCircleIcon,
-} from "@heroicons/react/solid";
+import { PencilIcon, SaveIcon, XCircleIcon } from "@heroicons/react/solid";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -11,6 +6,7 @@ export default function Story({ fullname, story, mode, userId }) {
   const [isEditing, setIsEditing] = useState(false);
   const [storyState, setStoryState] = useState(story);
   const [error, setError] = useState(null);
+
   const editStoryHandler = async () => {
     const data = { storyState, userId };
     fetch("/api/user/profile/updateStory", {
@@ -22,7 +18,6 @@ export default function Story({ fullname, story, mode, userId }) {
     })
       .then((response) => response.json())
       .then((res) => {
-        console.log("res", res);
         setIsEditing(false);
         setError(null);
         toast.success("Edited story!", {

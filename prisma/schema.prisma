@@ -56,7 +56,7 @@ model Link {
   id     String @id @default(cuid())
   url    String
   userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {

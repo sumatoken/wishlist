@@ -3,8 +3,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "../../../lib/prisma";
 import { compare } from "bcryptjs";
-import { useRouter } from "next/router";
-const router = useRouter();
 export default NextAuth({
   debug: true,
   secret: process.env.NEXTAUTH_SECRET,
@@ -67,7 +65,7 @@ export default NextAuth({
   },
   events: {
     signIn: ({ user }) => {
-      router.push(`/${username}`);
+      console.log("user", user);
     },
   },
 });

@@ -64,6 +64,7 @@ export default function Register() {
       .then((res) => {
         console.log("register", res);
         setCookie("email", res.email);
+        setCookie("password", info.password);
         setCookie("fullname", res.fullname);
         setCookie("registred", true);
         setCookie("newUserId", res.id);

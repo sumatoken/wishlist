@@ -14,7 +14,6 @@ export default function Alias({}) {
   const isNewUser = getCookie("registred");
   const { alias } = router.query;
   const { data: session, status } = useSession();
-
   if (status === "loading") {
     return <Loading />;
   }
