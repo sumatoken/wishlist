@@ -6,7 +6,6 @@ export default async function handler(req, res) {
   const hashedPassword = await hash(info.password, 10).then(function (hash) {
     return hash;
   });
-  console.log("server", hashedPassword);
   const user = await prisma.user.create({
     data: {
       fullname: info.fullname,

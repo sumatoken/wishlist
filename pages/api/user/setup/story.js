@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     },
     data: {
       story: info.story.story,
-      profileCompletion: 9,
+      // profileCompletion: 9,
     },
   });
   res.status(200).json(user);

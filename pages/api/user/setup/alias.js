@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     },
     data: {
       username: info.alias,
-      profileCompletion: 3,
+      // profileCompletion: 3,
     },
   });
   res.status(200).json(user);
