@@ -18,4 +18,5 @@ export async function middleware(req, res) {
       },
     });
   } */
+  //return NextResponse.redirect("http://localhost:3000/setup/alias");
 }

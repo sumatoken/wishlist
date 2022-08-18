@@ -42,12 +42,12 @@ model User {
   username          String?   @unique
   email             String?   @unique
   emailVerified     DateTime?
-  address           String?   @db.VarChar(200)
+  address           String?   @db.VarChar(5000)
   password          String?
   image             String?
   profileCompletion Int?
   isNameVisible     Boolean?  @default(false)
-  story             String?   @db.VarChar(200)
+  story             String?   @db.VarChar(5000)
   accounts          Account[]
   sessions          Session[]
   links             Link[]
@@ -70,6 +70,6 @@ model VerificationToken {
 
 model Suggestion {
   id        String   @id @default(cuid())
-  message   String   @db.VarChar(200)
+  message   String   @db.VarChar(5000)
   createdAt DateTime @default(now())
 }
